@@ -262,15 +262,16 @@ export default function ExpensesTable() {
               Filter by Date:
             </span>
 
-            <input
-              type="month" //  HTML5 month picker
-              value={yearMonthFilter}
-              onChange={(e) => {
-                setYearMonthFilter(e.target.value); // "YYYY-MM"
-                setCurrentPage(1);
-              }}
-              className="w-full sm:w-40 px-3 py-2 border border-gray-300 rounded-lg text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-            />
+           <input
+  type="month"
+  value={yearMonthFilter}
+  onChange={(e) => {
+    setYearMonthFilter(e.target.value);
+    setCurrentPage(1);
+  }}
+  className="w-full sm:w-40 px-3 py-2.5 border border-gray-300 rounded-lg text-sm md:text-base text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none"
+  style={{ colorScheme: "light" }}
+/>
 
             {/*Clear Button */}
             <button
