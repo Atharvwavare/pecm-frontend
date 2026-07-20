@@ -71,7 +71,7 @@ function Card({ title, value, gradient, icon: Icon }: CardProps) {
       hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 min-w-0`}
     >
       <div className="flex items-center justify-between mb-2 sm:mb-3">
-        <h4 className="text-xs sm:text-sm opacity-90 tracking-wide truncate">{title}</h4>
+       <h4 className="text-xs sm:text-sm text-white/90 tracking-wide truncate">{title}</h4>
         <Icon className="w-4 h-4 sm:w-5 sm:h-5 opacity-80 flex-shrink-0" />
       </div>
       <p className="text-xl sm:text-3xl font-bold truncate">{value}</p>

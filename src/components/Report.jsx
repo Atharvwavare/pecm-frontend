@@ -5,7 +5,7 @@ import CategoryPieChart from "./reports/CategoryPieChart";
 import MonthlyTrendChart from "./reports/MonthlyTrendChart";
 import DailyBreakdownTable from "./reports/DailyBreakDownTable";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import html2canvas from "html2canvas-pro";
 import { Download } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
