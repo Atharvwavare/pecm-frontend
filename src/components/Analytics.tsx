@@ -473,7 +473,7 @@ const Analytics = () => {
               {anomalies.length === 0 ? (
                 <div className="text-center py-8">
                   <p className="text-green-600 font-semibold text-sm sm:text-base">
-                    No unusual transactions 🎉
+                    No unusual transactions
                   </p>
                 </div>
               ) : (

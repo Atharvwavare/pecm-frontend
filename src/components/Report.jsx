@@ -64,52 +64,63 @@ export default function Report() {
     }
   };
   /*PROFESSIONAL PDF EXPORT */
-  const downloadPDF = async () => {
-    const input = reportRef.current;
-    if (!input || downloading) return;
+const downloadPDF = async () => {
+  const input = reportRef.current;
+  if (!input || downloading) return;
 
-    setDownloading(true);
+  setDownloading(true);
 
-    try {
-      const canvas = await html2canvas(input, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: "#ffffff",
-      });
+  try {
+    // Reset scroll position — prevents ghosted/offset captures
+    window.scrollTo(0, 0);
 
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
+    // Wait for fonts to fully load before capturing
+    if (document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+    }
 
-      const pageWidth = 210;
-      const pageHeight = 297;
-      const margin = 10;
+    // Small delay to let any pending layout/paint settle
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
-      const imgWidth = pageWidth - margin * 2;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      const usablePageHeight = pageHeight - margin * 2;
+    const canvas = await html2canvas(input, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: input.scrollWidth,
+      windowHeight: input.scrollHeight,
+    });
 
-      let heightLeft = imgHeight;
-      let position = margin;
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
 
-      // First page
+    const pageWidth = 210;
+    const pageHeight = 297;
+    const margin = 10;
+
+    const imgWidth = pageWidth - margin * 2;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const usablePageHeight = pageHeight - margin * 2;
+
+    let heightLeft = imgHeight;
+    let position = margin;
+
+    pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
+    heightLeft -= usablePageHeight;
+
+    while (heightLeft > 0) {
+      position = margin - (imgHeight - heightLeft);
+      pdf.addPage();
       pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
       heightLeft -= usablePageHeight;
-
-      // Additional pages — position corrected each time based on how much has
-      // already been shown, so nothing gets cut or duplicated across pages.
-      while (heightLeft > 0) {
-        position = margin - (imgHeight - heightLeft);
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
-        heightLeft -= usablePageHeight;
-      }
-
-      pdf.save(`Expense_Report_${month}_${year}.pdf`);
-    } finally {
-      setDownloading(false);
     }
-  };
 
+    pdf.save(`Expense_Report_${month}_${year}.pdf`);
+  } finally {
+    setDownloading(false);
+  }
+};
   // Report Interface
   return (
     <div className="pt-20 lg:ml-64 min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8 pb-10">
