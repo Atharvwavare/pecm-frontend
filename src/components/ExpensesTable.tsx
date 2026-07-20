@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Search, Plus, Edit, Trash2, X, Eye } from "lucide-react";
+import { Search, Plus, Edit, Trash2, X, Eye, Calendar } from "lucide-react";
 import { toast } from "sonner";
 import {
   getExpenses,
@@ -257,30 +257,44 @@ export default function ExpensesTable() {
 
           {/* Month & Year Filter */}
           {/* Date Filter */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6 mt-2">
-            <span className="text-sm md:text-base font-medium text-gray-700">
-              Filter by Date:
-            </span>
+         <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-6 mt-2">
+  <span className="text-sm md:text-base font-medium text-gray-700">
+    Filter by Date:
+  </span>
 
-           <input
-  type="month"
-  value={yearMonthFilter}
-  onChange={(e) => {
-    setYearMonthFilter(e.target.value);
-    setCurrentPage(1);
-  }}
-  className="w-full sm:w-40 px-3 py-2.5 border border-gray-300 rounded-lg text-sm md:text-base text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none"
-  style={{ colorScheme: "light" }}
-/>
+  <div className="flex gap-2 w-full sm:w-auto">
+    <div className="relative flex-1 sm:flex-none sm:w-44">
+      <input
+        type="month"
+        value={yearMonthFilter}
+        onChange={(e) => {
+          setYearMonthFilter(e.target.value);
+          setCurrentPage(1);
+        }}
+        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+        style={{ colorScheme: "light" }}
+      />
+      <div className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm md:text-base bg-white flex items-center justify-between pointer-events-none">
+        <span className={yearMonthFilter ? "text-gray-800 font-medium" : "text-gray-400"}>
+          {yearMonthFilter
+            ? new Date(yearMonthFilter + "-01").toLocaleDateString("en-US", {
+                month: "long",
+                year: "numeric",
+              })
+            : "Select month"}
+        </span>
+        <Calendar className="w-4 h-4 text-gray-400 flex-shrink-0" />
+      </div>
+    </div>
 
-            {/*Clear Button */}
-            <button
-              onClick={() => setYearMonthFilter("")}
-              className="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm md:text-base transition-colors"
-            >
-              Clear
-            </button>
-          </div>
+    <button
+      onClick={() => setYearMonthFilter("")}
+      className="px-4 py-2.5 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm md:text-base font-medium transition-colors flex-shrink-0"
+    >
+      Clear
+    </button>
+  </div>
+</div>
         </div>
 
         {/* Add/Edit Expense Modal */}
@@ -418,13 +432,15 @@ export default function ExpensesTable() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Category</p>
-                 <span
-  className={`inline-flex items-center px-3 py-1 rounded-full text-white text-sm ${
-    categoryColorMap[selectedExpense.category?.name?.trim() || ""] || "bg-gray-400"
-  }`}
->
-  {selectedExpense.category.name}
-</span>
+                  <span
+                    className={`inline-flex items-center px-3 py-1 rounded-full text-white text-sm ${
+                      categoryColorMap[
+                        selectedExpense.category?.name?.trim() || ""
+                      ] || "bg-gray-400"
+                    }`}
+                  >
+                    {selectedExpense.category.name}
+                  </span>
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Date</p>
