@@ -15,6 +15,7 @@ import Report from "./components/Report";
 import FeaturedReports from "./components/FeaturedReports";
 import Analytics from "./components/Analytics";
 import AddCategories from "./components/AddCategories";
+import HelpPage from "./components/HelpPage";
 
 import { LoginModal } from "./components/LoginModal";
 import { RegisterModal } from "./components/RegisterModal";
@@ -75,6 +76,7 @@ export default function App() {
           <Route path="/featured_reports" element={<FeaturedReports />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/help" element={<HelpPage />} />
           <Route path="/addcategories" element={<AddCategories />} />
           <Route
             path="/admin"

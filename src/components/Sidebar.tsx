@@ -8,6 +8,7 @@ import {
   LineChart,
   ScatterChart,
   FolderCog,
+  HelpCircle,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -29,6 +30,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
     { path: "/featured_reports", label: "Featured Reports", icon: LineChart },
     { path: "/analytics", label: "Analytics", icon: ScatterChart },
     { path: "/addcategories", label: "Add Categories", icon: FolderCog },
+    { path: "/help", label: "Help & Support", icon: HelpCircle },
     { path: "/settings", label: "Settings", icon: Settings },
     ...(user?.role === "ADMIN"
       ? [{ path: "/admin", label: "User Management", icon: ShieldCheck }]
