@@ -52,7 +52,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         className={`
     fixed lg:fixed
     top-16 left-0
-    h-[calc(100vh-4rem)]
+    h-[calc(120vh-4rem)]
     w-64
     bg-white border-r border-gray-200
     flex flex-col shadow-sm
